@@ -4,54 +4,80 @@ export default function App() {
   const burgers = [
     {
       name: "Smash Clássico",
+      badge: "Guerreiro",
       price: "R$22",
-      desc: "O guerreiro da linha de frente. Smash 90g, queijo e molho da casa.",
+      desc: "Smash 90g, queijo derretido e molho da casa.",
+      highlight: "Entrada perfeita para a arena",
     },
     {
       name: "César Burguer",
+      badge: "Imperador",
       price: "R$28",
-      desc: "O imperador da arena. Hambúrguer 120g, bacon e molho imperial.",
+      desc: "Hambúrguer 120g, bacon e molho imperial.",
+      highlight: "O burger assinatura da casa",
     },
     {
       name: "Burguer Premium",
+      badge: "Elite",
       price: "R$32",
-      desc: "A escolha dos que nasceram para dominar. Cheddar, bacon e cebola caramelizada.",
+      desc: "Cheddar, bacon crocante e cebola caramelizada.",
+      highlight: "A escolha dos que dominam",
     },
     {
       name: "Burguer Duplo",
+      badge: "Conquista",
       price: "R$35",
-      desc: "Força dobrada para vencer a arena. Dois hambúrgueres e queijo duplo.",
+      desc: "Dois hambúrgueres, queijo duplo e molho especial.",
+      highlight: "Força máxima contra a fome",
     },
   ];
 
   return (
     <div
       style={{
-        background: "#000",
-        color: "#fff",
         minHeight: "100vh",
+        background:
+          "linear-gradient(180deg, #020202 0%, #071633 45%, #000000 100%)",
+        color: "#fff",
         fontFamily: "Arial, sans-serif",
       }}
     >
-      <section style={{ padding: "60px 20px", textAlign: "center" }}>
-        <h1 style={{ color: "#d4af37", fontSize: 48 }}>CÉSAR'S BURGUER</h1>
+      <section style={{ padding: "70px 20px 50px", textAlign: "center" }}>
+        <div
+          style={{
+            display: "inline-block",
+            border: "1px solid #d4af37",
+            color: "#d4af37",
+            padding: "8px 16px",
+            borderRadius: 999,
+            fontWeight: "bold",
+            marginBottom: 20,
+          }}
+        >
+          O IMPÉRIO DO SABOR
+        </div>
 
-        <p style={{ fontSize: 22, marginTop: 10 }}>
+        <h1 style={{ fontSize: 56, color: "#f5d66b", margin: 0 }}>
+          CÉSAR'S BURGUER
+        </h1>
+
+        <p style={{ fontSize: 24, marginTop: 16 }}>
           Neste império, a fome é o inimigo dos gladiadores.
         </p>
 
-        <p style={{ color: "#ccc", maxWidth: 560, margin: "20px auto" }}>
-          Burgers artesanais com identidade imperial, sabor intenso e presença
-          de arena.
+        <p
+          style={{ color: "#d7d7d7", maxWidth: 700, margin: "18px auto 28px" }}
+        >
+          Delivery com identidade imperial, visual marcante e burgers forjados
+          para conquistar.
         </p>
 
         <div
           style={{
             display: "flex",
-            gap: 12,
+            gap: 14,
             justifyContent: "center",
             flexWrap: "wrap",
-            marginTop: 24,
           }}
         >
           <a
@@ -61,70 +87,163 @@ export default function App() {
             style={{
               background: "#d4af37",
               color: "#000",
-              padding: "14px 22px",
-              borderRadius: 10,
+              padding: "14px 24px",
+              borderRadius: 12,
               textDecoration: "none",
               fontWeight: "bold",
+              boxShadow: "0 8px 24px rgba(212,175,55,0.25)",
             }}
           >
-            Pedir no WhatsApp
+            Pedir Agora
           </a>
 
           <a
-            href="#cardapio"
+            href="#menu"
             style={{
-              border: "1px solid #d4af37",
-              color: "#d4af37",
-              padding: "14px 22px",
-              borderRadius: 10,
+              border: "1px solid #4f83ff",
+              color: "#89adff",
+              padding: "14px 24px",
+              borderRadius: 12,
               textDecoration: "none",
               fontWeight: "bold",
             }}
           >
-            Ver Cardápio
+            Explorar Cardápio
           </a>
         </div>
       </section>
 
-      <section style={{ padding: 40, textAlign: "center" }}>
-        <h2 style={{ color: "#d4af37" }}>
-          FORJADO NA CHAPA. SERVIDO COMO IMPÉRIO.
-        </h2>
-
-        <p style={{ maxWidth: 650, margin: "20px auto", color: "#bbb" }}>
-          Na César's Burguer cada detalhe carrega a força da arena. Ingredientes
-          selecionados, identidade forte e sabor digno de gladiadores.
-        </p>
-      </section>
-
-      <section id="cardapio" style={{ padding: "40px 20px" }}>
-        <h2 style={{ textAlign: "center", color: "#d4af37" }}>
-          CARDÁPIO IMPERIAL
-        </h2>
-
-        <div style={{ maxWidth: 720, margin: "30px auto" }}>
-          {burgers.map((item) => (
+      <section
+        style={{ maxWidth: 1100, margin: "0 auto", padding: "0 20px 30px" }}
+      >
+        <div
+          style={{
+            display: "grid",
+            gap: 16,
+            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+          }}
+        >
+          {[
+            [
+              "Arena de Sabor",
+              "Combinações fortes, identidade premium e presença marcante.",
+            ],
+            ["Pedido Rápido", "Um toque no WhatsApp e a conquista começa."],
+            [
+              "Marca Imperial",
+              "Visual preto, dourado e azul para ser lembrado.",
+            ],
+          ].map(([title, text]) => (
             <div
-              key={item.name}
+              key={title}
               style={{
-                background: "#111",
-                padding: 20,
-                marginBottom: 15,
-                borderRadius: 14,
-                border: "1px solid #222",
+                background: "rgba(10,10,10,0.85)",
+                border: "1px solid rgba(212,175,55,0.18)",
+                borderRadius: 18,
+                padding: 22,
               }}
             >
-              <h3 style={{ marginBottom: 5 }}>{item.name}</h3>
-              <p style={{ color: "#bbb", marginBottom: 10 }}>{item.desc}</p>
-              <strong style={{ color: "#d4af37" }}>{item.price}</strong>
+              <h3 style={{ color: "#d4af37", marginTop: 0 }}>{title}</h3>
+              <p style={{ color: "#c9c9c9", marginBottom: 0 }}>{text}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section style={{ textAlign: "center", padding: 40 }}>
-        <h2 style={{ color: "#d4af37" }}>ENTRE NA ARENA.</h2>
-        <p style={{ fontSize: 18 }}>Escolha seu burger e derrote a fome.</p>
+      <section
+        id="menu"
+        style={{ maxWidth: 1100, margin: "0 auto", padding: "20px 20px 60px" }}
+      >
+        <h2 style={{ textAlign: "center", color: "#f5d66b", fontSize: 36 }}>
+          CARDÁPIO IMPERIAL
+        </h2>
+        <p
+          style={{
+            textAlign: "center",
+            color: "#bdbdbd",
+            maxWidth: 600,
+            margin: "10px auto 30px",
+          }}
+        >
+          Cada burger foi criado para transformar fome em conquista.
+        </p>
+
+        <div
+          style={{
+            display: "grid",
+            gap: 18,
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+          }}
+        >
+          {burgers.map((item) => (
+            <div
+              key={item.name}
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(16,16,16,0.95), rgba(7,7,7,0.95))",
+                border: "1px solid rgba(79,131,255,0.15)",
+                borderRadius: 22,
+                padding: 22,
+                boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  gap: 12,
+                  alignItems: "center",
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: 12,
+                    background: "rgba(212,175,55,0.15)",
+                    color: "#f5d66b",
+                    padding: "6px 10px",
+                    borderRadius: 999,
+                    fontWeight: "bold",
+                  }}
+                >
+                  {item.badge}
+                </span>
+                <strong style={{ color: "#d4af37", fontSize: 20 }}>
+                  {item.price}
+                </strong>
+              </div>
+
+              <h3 style={{ marginBottom: 8 }}>{item.name}</h3>
+              <p style={{ color: "#dcdcdc", marginBottom: 10 }}>{item.desc}</p>
+              <p style={{ color: "#89adff", margin: 0, fontWeight: "bold" }}>
+                {item.highlight}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section style={{ textAlign: "center", padding: "10px 20px 70px" }}>
+        <h2 style={{ color: "#d4af37", fontSize: 34 }}>
+          Entre na arena. Vença a fome.
+        </h2>
+        <p style={{ color: "#cfcfcf", marginBottom: 28 }}>
+          O império está aberto. Escolha seu burger e peça agora.
+        </p>
+        <a
+          href="https://wa.me/5511932351231"
+          target="_blank"
+          rel="noreferrer"
+          style={{
+            background: "#1d4ed8",
+            color: "#fff",
+            padding: "14px 24px",
+            borderRadius: 12,
+            textDecoration: "none",
+            fontWeight: "bold",
+          }}
+        >
+          Fazer Pedido
+        </a>
       </section>
     </div>
   );
