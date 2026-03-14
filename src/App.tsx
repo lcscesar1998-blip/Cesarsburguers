@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import "./styles.css";
 
 const products = [
   {
@@ -124,7 +125,9 @@ Total final: Subtotal + taxa de entrega`;
           alt="Logo Cesar's Burguer"
           className="hero-logo"
         />
+
         <h1>Cesar&apos;s Burguer</h1>
+
         <p className="subtitle">
           Nesse império a fome é o inimigo dos gladiadores.
         </p>
@@ -132,6 +135,7 @@ Total final: Subtotal + taxa de entrega`;
 
       <section className="menu">
         <h2>Cardápio</h2>
+
         <p className="delivery-info">
           🚚 Taxa de entrega: R$1,80 por km a partir da loja
         </p>
@@ -144,9 +148,11 @@ Total final: Subtotal + taxa de entrega`;
                 alt={product.name}
                 className="card-img"
               />
+
               <h3>{product.name}</h3>
               <p>{product.description}</p>
               <strong>{formatPrice(product.price)}</strong>
+
               <button onClick={() => addToCart(product)}>Adicionar</button>
             </div>
           ))}
@@ -156,7 +162,7 @@ Total final: Subtotal + taxa de entrega`;
       <section className="cart">
         <h2>Seu Pedido</h2>
 
-        {cart.length === 0 && <p>Seu carrinho está vazio.</p>}
+        {cart.length === 0 && <p className="empty">Seu carrinho está vazio.</p>}
 
         {cart.map((item) => (
           <div key={item.id} className="cart-item">
