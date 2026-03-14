@@ -117,6 +117,7 @@ Taxa de entrega: R$1,80 por km (calculada conforme a distância)
 Total final: Subtotal + taxa de entrega`;
 
     const url = https://wa.me/${phone}?text=${encodeURIComponent(message)};
+
     window.open(url, "_blank");
   };
 
@@ -132,7 +133,7 @@ Total final: Subtotal + taxa de entrega`;
         <h1>Cesar&apos;s Burguer</h1>
 
         <p className="subtitle">
-          Nesse império a fome é o inimigo dos gladiadores.
+          Nesse império a fome é o inimigo dos gladiadores
         </p>
       </header>
 
@@ -140,17 +141,13 @@ Total final: Subtotal + taxa de entrega`;
         <h2>Cardápio</h2>
 
         <p className="delivery-info">
-          🚚 Taxa de entrega: R$1,80 por km a partir da loja.
+          🚚 Taxa de entrega: R$1,80 por km a partir da loja
         </p>
 
         <div className="cards">
           {products.map((product) => (
             <div className="card" key={product.id}>
-              <img
-                src={product.image}
-                alt={product.name}
-                className="card-img"
-              />
+              <img src={product.image} alt={product.name} />
 
               <h3>{product.name}</h3>
 
@@ -158,7 +155,9 @@ Total final: Subtotal + taxa de entrega`;
 
               <strong>{formatPrice(product.price)}</strong>
 
-              <button onClick={() => addToCart(product)}>Adicionar</button>
+              <button onClick={() => addToCart(product)}>
+                Adicionar
+              </button>
             </div>
           ))}
         </div>
@@ -183,6 +182,7 @@ Total final: Subtotal + taxa de entrega`;
         ))}
 
         <h3>Subtotal: {formatPrice(total)}</h3>
+
         <p className="delivery-note-cart">
           Taxa de entrega: R$1,80 por km (calculada conforme a distância)
         </p>
