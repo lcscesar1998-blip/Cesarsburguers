@@ -42,46 +42,44 @@ export default function App() {
     const existing = cart.find((item) => item.id === product.id);
 
     if (existing) {
-      const updatedCart = cart.map((item) =>
-        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+      setCart(
+        cart.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
       );
-      setCart(updatedCart);
     } else {
       setCart([...cart, { ...product, quantity: 1 }]);
     }
   };
 
   const increase = (id: number) => {
-    const updatedCart = cart.map((item) =>
-      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+    setCart(
+      cart.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      )
     );
-    setCart(updatedCart);
   };
 
   const decrease = (id: number) => {
-    const updatedCart = cart
-      .map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity - 1 } : item
-      )
-      .filter((item) => item.quantity > 0);
-
-    setCart(updatedCart);
+    setCart(
+      cart
+        .map((item) =>
+          item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
   };
 
-  const total = cart.reduce((sum, item) => {
-    return sum + item.price * item.quantity;
-  }, 0);
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-  const totalItems = cart.reduce((sum, item) => {
-    return sum + item.quantity;
-  }, 0);
-
-  const formatPrice = (value: number) => {
-    return value.toLocaleString("pt-BR", {
+  const formatPrice = (value: number) =>
+    value.toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
     });
-  };
 
   const sendOrderToWhatsApp = () => {
     if (cart.length === 0) {
@@ -115,7 +113,6 @@ Taxa de entrega: R$1,80 por km (calculada conforme a distância)
 Total final: Subtotal + taxa de entrega`;
 
     const url = "https://wa.me/${phone}?text=${encodeURIComponent(message)}";
-
     window.open(url, "_blank");
   };
 
@@ -127,17 +124,14 @@ Total final: Subtotal + taxa de entrega`;
           alt="Logo Cesar's Burguer"
           className="hero-logo"
         />
-
         <h1>Cesar&apos;s Burguer</h1>
-
         <p className="subtitle">
-          Nesse império a fome é o inimigo dos gladiadores
+          Nesse império a fome é o inimigo dos gladiadores.
         </p>
       </header>
 
       <section className="menu">
         <h2>Cardápio</h2>
-
         <p className="delivery-info">
           🚚 Taxa de entrega: R$1,80 por km a partir da loja
         </p>
@@ -145,14 +139,14 @@ Total final: Subtotal + taxa de entrega`;
         <div className="cards">
           {products.map((product) => (
             <div className="card" key={product.id}>
-              <img src={product.image} alt={product.name} />
-
+              <img
+                src={product.image}
+                alt={product.name}
+                className="card-img"
+              />
               <h3>{product.name}</h3>
-
               <p>{product.description}</p>
-
               <strong>{formatPrice(product.price)}</strong>
-
               <button onClick={() => addToCart(product)}>Adicionar</button>
             </div>
           ))}
