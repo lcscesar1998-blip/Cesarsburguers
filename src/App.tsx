@@ -6,29 +6,29 @@ const products = [
     name: "Smash Clássico",
     price: 22.9,
     image: "/images/smash-classico.png",
-    description: "Pão brioche, smash burger, queijo e molho da casa."
+    description: "Pão brioche, smash burger, queijo e molho da casa.",
   },
   {
     id: 2,
     name: "Burguer Premium",
     price: 29.9,
     image: "/images/burguer-premium.png",
-    description: "Hambúrguer artesanal, cheddar e bacon crocante."
+    description: "Hambúrguer artesanal, cheddar e bacon crocante.",
   },
   {
     id: 3,
     name: "César Burguer",
     price: 27.9,
     image: "/images/cesar-burguer.png",
-    description: "Hambúrguer artesanal especial com molho da casa."
+    description: "Hambúrguer artesanal especial com molho da casa.",
   },
   {
     id: 4,
     name: "Burguer Duplo",
     price: 34.9,
     image: "/images/burguer-duplo.png",
-    description: "Dois hambúrgueres artesanais com queijo e bacon."
-  }
+    description: "Dois hambúrgueres artesanais com queijo e bacon.",
+  },
 ];
 
 export default function App() {
@@ -43,9 +43,7 @@ export default function App() {
 
     if (existing) {
       const updatedCart = cart.map((item) =>
-        item.id === product.id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
+        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
       );
       setCart(updatedCart);
     } else {
@@ -81,7 +79,7 @@ export default function App() {
   const formatPrice = (value: number) => {
     return value.toLocaleString("pt-BR", {
       style: "currency",
-      currency: "BRL"
+      currency: "BRL",
     });
   };
 
@@ -116,7 +114,7 @@ Subtotal: ${formatPrice(total)}
 Taxa de entrega: R$1,80 por km (calculada conforme a distância)
 Total final: Subtotal + taxa de entrega`;
 
-    const url = https://wa.me/${phone}?text=${encodeURIComponent(message)};
+    const url = "https://wa.me/${phone}?text=${encodeURIComponent(message)}";
 
     window.open(url, "_blank");
   };
@@ -155,9 +153,7 @@ Total final: Subtotal + taxa de entrega`;
 
               <strong>{formatPrice(product.price)}</strong>
 
-              <button onClick={() => addToCart(product)}>
-                Adicionar
-              </button>
+              <button onClick={() => addToCart(product)}>Adicionar</button>
             </div>
           ))}
         </div>
