@@ -2,15 +2,19 @@ export default function App() {
   return (
     <div className="app">
       <header className="hero">
-        <img
-          src="/logo-cesars.png"
-          alt="Logo Cesar's Burguer"
-          className="hero-logo"
-        />
         <div className="overlay" />
+
         <div className="hero-content">
+          <img
+            src="/logo-cesars.png"
+            alt="Logo Cesar's Burguer"
+            className="hero-logo"
+          />
+
           <span className="badge">Versão Imperial 3.0</span>
+
           <h1>Cesar&apos;s Burguer</h1>
+
           <p className="subtitle">
             Nesse império, a fome é o inimigo dos gladiadores.
           </p>
@@ -19,8 +23,9 @@ export default function App() {
             <a href="#cardapio" className="btn btn-primary">
               Ver Cardápio
             </a>
+
             <a
-              href="https://wa.me/5511977325368"
+              href="https://wa.me/5511932351231"
               target="_blank"
               rel="noreferrer"
               className="btn btn-secondary"
@@ -66,7 +71,8 @@ export default function App() {
         </section>
 
         <section className="section dark-section">
-          <h2 className="section-title">Combos</h2>
+          <h2 className="section-title">Combos Imperiais</h2>
+
           <div className="cards">
             <article className="card">
               <h3>Combo Arena</h3>
@@ -96,7 +102,7 @@ export default function App() {
 
           <div className="cta-box">
             <a
-              href="https://wa.me/5511977325368"
+              href="https://wa.me/5511932351231"
               target="_blank"
               rel="noreferrer"
               className="btn btn-primary"
@@ -107,8 +113,22 @@ export default function App() {
         </section>
       </main>
 
+      <a
+        href="https://wa.me/5511932351231"
+        target="_blank"
+        rel="noreferrer"
+        className="whatsapp-float"
+      >
+        WhatsApp
+      </a>
+
       <footer className="footer">
-        <p>Cesar&apos;s Burguer © 2026 - Versão Imperial 3.0</p>
+        <img
+          src="/logo-cesars.png"
+          alt="Logo Cesar's Burguer"
+          className="footer-logo"
+        />
+        <p>Cesar&apos;s Burguer © 2026 - Todos os direitos reservados</p>
       </footer>
     </div>
   );
