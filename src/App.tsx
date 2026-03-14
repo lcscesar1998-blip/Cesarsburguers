@@ -76,11 +76,12 @@ export default function App() {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-  const formatPrice = (value: number) =>
-    value.toLocaleString("pt-BR", {
+  const formatPrice = (value: number) => {
+    return value.toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
     });
+  };
 
   const sendOrderToWhatsApp = () => {
     if (cart.length === 0) {
@@ -113,7 +114,7 @@ Subtotal: ${formatPrice(total)}
 Taxa de entrega: R$1,80 por km (calculada conforme a distância)
 Total final: Subtotal + taxa de entrega`;
 
-    const url = "https://wa.me/${phone}?text=${encodeURIComponent(message)}";
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
   };
 
