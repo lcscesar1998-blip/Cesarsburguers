@@ -1,200 +1,172 @@
+import { useMemo, useState } from "react";
+
+type Product = {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  description: string;
+  tag: string;
+};
+
+type CartItem = Product & {
+  quantity: number;
+};
+
+const products: Product[] = [
+  {
+    id: 1,
+    name: "Smash Clássico",
+    price: 22.9,
+    image: "/images/smash-classico.png",
+    description: "Pão brioche, smash burger, queijo e molho da casa.",
+    tag: "Clássico",
+  },
+  {
+    id: 2,
+    name: "Burguer Premium",
+    price: 29.9,
+    image: "/images/burguer-premium.png",
+    description: "Hambúrguer artesanal, cheddar cremoso e bacon crocante.",
+    tag: "Premium",
+  },
+  {
+    id: 3,
+    name: "César Burguer",
+    price: 27.9,
+    image: "/images/cesar-burguer.png",
+    description: "Hambúrguer artesanal com batata especial e molho da casa.",
+    tag: "Especial",
+  },
+  {
+    id: 4,
+    name: "Burguer Duplo",
+    price: 34.9,
+    image: "/images/burguer-duplo.png",
+    description: "Dois hambúrgueres artesanais com queijo e bacon.",
+    tag: "Duplo",
+  },
+];
+
 export default function App() {
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [payment, setPayment] = useState("");
+  const [notes, setNotes] = useState("");
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const addToCart = (product: Product) => {
+    setCart((prev) => {
+      const existing = prev.find((item) => item.id === product.id);
+
+      if (existing) {
+        return prev.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+
+      return [...prev, { ...product, quantity: 1 }];
+    });
+
+    setIsCartOpen(true);
+  };
+
+  const increaseQuantity = (id: number) => {
+    setCart((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
+  const decreaseQuantity = (id: number) => {
+    setCart((prev) =>
+      prev
+        .map((item) =>
+          item.id === id
+            ? { ...item, quantity: Math.max(0, item.quantity - 1) }
+            : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
+  };
+
+  const removeItem = (id: number) => {
+    setCart((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const totalItems = useMemo(
+    () => cart.reduce((sum, item) => sum + item.quantity, 0),
+    [cart]
+  );
+
+  const totalPrice = useMemo(
+    () => cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+    [cart]
+  );
+
+  const formatPrice = (value: number) =>
+    value.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+
+  const sendOrderToWhatsApp = () => {
+    if (cart.length === 0) {
+      alert("Seu carrinho está vazio.");
+      return;
+    }
+
+    const phone = "5511932351231";
+
+    const itemsText = cart
+      .map(
+        (item) =>
+          `- ${item.quantity}x ${item.name} — ${formatPrice(
+            item.price * item.quantity
+          )}`
+      )
+      .join("\n");
+
+    const message =
+      Olá! Quero fazer um pedido na Cesar's Burguer:%0A%0A +
+      Nome: ${name || "Não informado"}%0A +
+      Endereço: ${address || "Não informado"}%0A +
+      Pagamento: ${payment || "Não informado"}%0A +
+      Observações: ${notes || "Nenhuma"}%0A%0A +
+      Pedido:%0A${itemsText}%0A%0A +
+      Total: ${formatPrice(totalPrice)};
+
+    const url = https://wa.me/${phone}?text=${message};
+    window.open(url, "_blank");
+  };
+
   return (
     <div className="app">
       <header className="hero">
+        <div className="overlay" />
+
         <nav className="topbar">
           <div className="brand-mini">
             <img
               src="/logo-cesars.png"
-              alt="Cesar's Burguer"
+              alt="Logo Cesar's Burguer"
               className="brand-mini-logo"
             />
-            <span>Cesar's Burguer</span>
+            <span>Cesar&apos;s Burguer</span>
           </div>
 
           <div className="topbar-links">
             <a href="#cardapio">Cardápio</a>
             <a href="#combos">Combos</a>
-            <a href="#pedido">Pedido</a>
-          </div>
-        </nav>
-
-        <div className="hero-content">
-          <img
-            src="/logo-cesars.png"
-            alt="Logo Cesar's Burguer"
-            className="hero-logo"
-          />
-
-          <h1>
-            O sabor de um <span>império</span>
-          </h1>
-
-          <p className="subtitle">
-            Nesse império, a fome é o inimigo dos gladiadores.
-          </p>
-
-          <div className="hero-buttons">
-            <a href="#cardapio" className="btn btn-primary">
-              Ver Cardápio
-            </a>
-
-            <a
-              href="https://wa.me/5511932351231"
-              target="_blank"
-              rel="noreferrer"
-              className="btn btn-secondary"
+            <button
+              type="button"
+              className="cart-toggle"
+              onClick={() => setIsCartOpen(true)}
             >
-              Pedir no WhatsApp
-            </a>
+              Carrinho ({totalItems})
+            </button>
           </div>
-        </div>
-      </header>
-
-      <main>
-        <section id="cardapio" className="section">
-          <h2 className="section-title">Cardápio Imperial</h2>
-
-          <p className="section-text">
-            Escolha seu lanche e entre para a arena do sabor.
-          </p>
-
-          <div className="cards">
-            <article className="card">
-              <img
-                src="/images/smash-classico.png"
-                alt="Smash Clássico"
-                className="card-img"
-              />
-
-              <div className="card-tag">Clássico</div>
-
-              <h3>Smash Clássico</h3>
-
-              <p>Pão brioche, smash burger, queijo e molho da casa.</p>
-
-              <strong>R$ 22,90</strong>
-            </article>
-
-            <article className="card featured">
-              <img
-                src="/images/burguer-premium.png"
-                alt="Burguer Premium"
-                className="card-img"
-              />
-
-              <div className="card-tag">Premium</div>
-
-              <h3>Burguer Premium</h3>
-
-              <p>Hambúrguer artesanal, cheddar cremoso e bacon crocante.</p>
-
-              <strong>R$ 29,90</strong>
-            </article>
-
-            <article className="card">
-              <img
-                src="/images/cesar-burguer.png"
-                alt="César Burguer"
-                className="card-img"
-              />
-
-              <div className="card-tag">Especial</div>
-
-              <h3>César Burguer</h3>
-
-              <p>Hambúrguer artesanal com batata especial e molho da casa.</p>
-
-              <strong>R$ 27,90</strong>
-            </article>
-
-            <article className="card">
-              <img
-                src="/images/burguer-duplo.png"
-                alt="Burguer Duplo"
-                className="card-img"
-              />
-
-              <div className="card-tag">Duplo</div>
-
-              <h3>Burguer Duplo</h3>
-
-              <p>Dois hambúrgueres artesanais com queijo e bacon.</p>
-
-              <strong>R$ 34,90</strong>
-            </article>
-          </div>
-        </section>
-
-        <section id="combos" className="section">
-          <h2 className="section-title">Combos Imperiais</h2>
-
-          <p className="section-text">
-            Monte seu combo perfeito com fritas e bebida.
-          </p>
-
-          <div className="cards">
-            <article className="card">
-              <div className="card-tag">Combo</div>
-
-              <h3>Combo Arena</h3>
-
-              <p>Smash Clássico + fritas + refrigerante.</p>
-
-              <strong>R$ 34,90</strong>
-            </article>
-
-            <article className="card">
-              <div className="card-tag">Combo</div>
-
-              <h3>Combo Premium</h3>
-
-              <p>Burguer Premium + fritas + refrigerante.</p>
-
-              <strong>R$ 39,90</strong>
-            </article>
-
-            <article className="card">
-              <div className="card-tag">Supremo</div>
-
-              <h3>Combo César Supremo</h3>
-
-              <p>Burguer Duplo + fritas + refrigerante.</p>
-
-              <strong>R$ 44,90</strong>
-            </article>
-          </div>
-        </section>
-
-        <section id="pedido" className="section">
-          <h2 className="section-title">Peça Agora</h2>
-
-          <p className="section-text">
-            Clique abaixo e fale direto com a Cesar's Burguer.
-          </p>
-
-          <div className="hero-buttons">
-            <a
-              href="https://wa.me/5511932351231"
-              target="_blank"
-              rel="noreferrer"
-              className="btn btn-primary"
-            >
-              Fazer Pedido no WhatsApp
-            </a>
-          </div>
-        </section>
-      </main>
-
-      <footer className="footer">
-        <img
-          src="/logo-cesars.png"
-          alt="Logo Cesar's Burguer"
-          className="footer-logo"
-        />
-
-        <p>Cesar's Burguer © 2026</p>
-      </footer>
-    </div>
-  );
-}
