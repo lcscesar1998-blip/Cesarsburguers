@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import "./styles.css";
 
+const storeAddress =
+  "Rua Quinta da Conraria, 38 - Parque Santo Antônio, São Paulo - SP";
+
+const pricePerKm = 1.8;
+
 const products = [
   {
     id: 1,
@@ -21,7 +26,7 @@ const products = [
     name: "César Burguer",
     price: 27.9,
     image: "/images/cesar-burguer.png",
-    description: "Hambúrguer artesanal especial com molho da casa.",
+    description: "Hambúrguer especial com molho da casa.",
   },
   {
     id: 4,
@@ -38,6 +43,7 @@ export default function App() {
   const [address, setAddress] = useState("");
   const [payment, setPayment] = useState("");
   const [notes, setNotes] = useState("");
+  const [distance, setDistance] = useState(0);
 
   const addToCart = (product: any) => {
     const existing = cart.find((item) => item.id === product.id);
@@ -73,15 +79,20 @@ export default function App() {
     );
   };
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const subtotal = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
 
-  const formatPrice = (value: number) => {
-    return value.toLocaleString("pt-BR", {
+  const deliveryFee = distance * pricePerKm;
+
+  const total = subtotal + deliveryFee;
+
+  const formatPrice = (value: number) =>
+    value.toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
     });
-  };
 
   const sendOrderToWhatsApp = () => {
     if (cart.length === 0) {
@@ -100,58 +111,53 @@ export default function App() {
       )
       .join("\n");
 
-    const message = `Olá! Quero fazer um pedido na Cesar's Burguer
+    const message = `Pedido - Cesar's Burguer
 
-Nome: ${name || "Não informado"}
-Endereço: ${address || "Não informado"}
-Pagamento: ${payment || "Não informado"}
-Observações: ${notes || "Nenhuma"}
+Cliente: ${name}
+Endereço: ${address}
 
 Pedido:
 ${items}
 
-Subtotal: ${formatPrice(total)}
-Taxa de entrega: R$1,80 por km (calculada conforme a distância)
-Total final: Subtotal + taxa de entrega`;
+Subtotal: ${formatPrice(subtotal)}
+Entrega (${distance} km): ${formatPrice(deliveryFee)}
+Total: ${formatPrice(total)}
+
+Pagamento: ${payment}
+Obs: ${notes}
+
+Loja:
+${storeAddress}`;
 
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
     window.open(url, "_blank");
   };
 
   return (
     <div className="app">
       <header className="hero">
-        <img
-          src="/logo-cesars.png"
-          alt="Logo Cesar's Burguer"
-          className="hero-logo"
-        />
+        <img src="/logo-cesars.png" className="hero-logo" />
 
-        <h1>Cesar&apos;s Burguer</h1>
+        <h1>Cesar's Burguer</h1>
 
-        <p className="subtitle">
-          Nesse império a fome é o inimigo dos gladiadores.
-        </p>
+        <p>Nesse império a fome é o inimigo dos gladiadores</p>
+
+        <p className="delivery-info">🚚 Entrega R$1,80 por km</p>
       </header>
 
       <section className="menu">
         <h2>Cardápio</h2>
 
-        <p className="delivery-info">
-          🚚 Taxa de entrega: R$1,80 por km a partir da loja
-        </p>
-
         <div className="cards">
           {products.map((product) => (
             <div className="card" key={product.id}>
-              <img
-                src={product.image}
-                alt={product.name}
-                className="card-img"
-              />
+              <img src={product.image} />
 
               <h3>{product.name}</h3>
+
               <p>{product.description}</p>
+
               <strong>{formatPrice(product.price)}</strong>
 
               <button onClick={() => addToCart(product)}>Adicionar</button>
@@ -163,44 +169,49 @@ Total final: Subtotal + taxa de entrega`;
       <section className="cart">
         <h2>Seu Pedido</h2>
 
-        {cart.length === 0 && <p className="empty">Seu carrinho está vazio.</p>}
-
         {cart.map((item) => (
-          <div key={item.id} className="cart-item">
+          <div className="cart-item" key={item.id}>
             <span>
               {item.name} ({item.quantity})
             </span>
 
-            <div className="cart-controls">
+            <div>
               <button onClick={() => decrease(item.id)}>-</button>
               <button onClick={() => increase(item.id)}>+</button>
             </div>
           </div>
         ))}
 
-        <h3>Subtotal: {formatPrice(total)}</h3>
+        <h3>Subtotal: {formatPrice(subtotal)}</h3>
 
-        <p className="delivery-note-cart">
-          Taxa de entrega: R$1,80 por km (calculada conforme a distância)
-        </p>
+        <div className="delivery-calc">
+          <label>Distância em KM:</label>
+
+          <input
+            type="number"
+            value={distance}
+            onChange={(e) => setDistance(Number(e.target.value))}
+          />
+
+          <p>Entrega: {formatPrice(deliveryFee)}</p>
+        </div>
+
+        <h2>Total: {formatPrice(total)}</h2>
 
         <div className="form">
           <input
-            type="text"
             placeholder="Seu nome"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
 
           <input
-            type="text"
             placeholder="Endereço"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
           />
 
           <input
-            type="text"
             placeholder="Forma de pagamento"
             value={payment}
             onChange={(e) => setPayment(e.target.value)}
@@ -214,13 +225,9 @@ Total final: Subtotal + taxa de entrega`;
         </div>
 
         <button className="whatsapp" onClick={sendOrderToWhatsApp}>
-          Finalizar Pedido no WhatsApp
+          Finalizar no WhatsApp
         </button>
       </section>
-
-      <button className="order-fixed" onClick={sendOrderToWhatsApp}>
-        🛒 Pedido ({totalItems})
-      </button>
     </div>
   );
 }
