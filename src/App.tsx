@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import "./styles.css";
 
 const storeAddress =
-  "Rua Quinta da Conraria, 38 - Parque Santo Antônio, São Paulo - SP";
-
-const pricePerKm = 1.8;
+  "Rua Quinta da Conraria, 38 - Parque Santo Antônio, São Paulo - SP - 05852-480";
 
 const products = [
   {
@@ -37,13 +35,29 @@ const products = [
   },
 ];
 
+function getDeliveryFee(distance: number) {
+  if (distance <= 0) return 0;
+  if (distance <= 2.5) return 3.5;
+  if (distance <= 5) return 7;
+  if (distance <= 10) return 12.5;
+  return 17;
+}
+
+function getDeliveryLabel(distance: number) {
+  if (distance <= 0) return "Informe a distância";
+  if (distance <= 2.5) return "Até 2,5 km";
+  if (distance <= 5) return "De 2,5 km até 5 km";
+  if (distance <= 10) return "De 5 km até 10 km";
+  return "Acima de 10 km";
+}
+
 export default function App() {
   const [cart, setCart] = useState<any[]>([]);
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [payment, setPayment] = useState("");
   const [notes, setNotes] = useState("");
-  const [distance, setDistance] = useState(0);
+  const [distance, setDistance] = useState<number | "">("");
 
   const addToCart = (product: any) => {
     const existing = cart.find((item) => item.id === product.id);
@@ -56,9 +70,10 @@ export default function App() {
             : item
         )
       );
-    } else {
-      setCart([...cart, { ...product, quantity: 1 }]);
+      return;
     }
+
+    setCart([...cart, { ...product, quantity: 1 }]);
   };
 
   const increase = (id: number) => {
@@ -79,13 +94,17 @@ export default function App() {
     );
   };
 
-  const subtotal = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+  const subtotal = useMemo(() => {
+    return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  }, [cart]);
 
-  const deliveryFee = distance * pricePerKm;
+  const totalItems = useMemo(() => {
+    return cart.reduce((sum, item) => sum + item.quantity, 0);
+  }, [cart]);
 
+  const numericDistance = typeof distance === "number" ? distance : 0;
+  const deliveryFee = getDeliveryFee(numericDistance);
+  const deliveryLabel = getDeliveryLabel(numericDistance);
   const total = subtotal + deliveryFee;
 
   const formatPrice = (value: number) =>
@@ -96,7 +115,17 @@ export default function App() {
 
   const sendOrderToWhatsApp = () => {
     if (cart.length === 0) {
-      alert("Seu carrinho está vazio");
+      alert("Seu carrinho está vazio.");
+      return;
+    }
+
+    if (!name.trim()) {
+      alert("Informe o nome do cliente.");
+      return;
+    }
+
+    if (!address.trim()) {
+      alert("Informe o endereço de entrega.");
       return;
     }
 
@@ -120,83 +149,126 @@ Pedido:
 ${items}
 
 Subtotal: ${formatPrice(subtotal)}
-Entrega (${distance} km): ${formatPrice(deliveryFee)}
+Entrega: ${formatPrice(deliveryFee)} (${deliveryLabel})
 Total: ${formatPrice(total)}
 
-Pagamento: ${payment}
-Obs: ${notes}
+Pagamento: ${payment || "Não informado"}
+Observações: ${notes || "Nenhuma"}
 
-Loja:
+Origem da loja:
 ${storeAddress}`;
 
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-
     window.open(url, "_blank");
   };
 
   return (
     <div className="app">
-      <header className="hero">
-        <img src="/logo-cesars.png" className="hero-logo" />
+      <nav className="topbar">
+        <a href="#inicio">Início</a>
+        <a href="#cardapio">Cardápio</a>
+        <a href="#pedido">Pedido</a>
+      </nav>
 
-        <h1>Cesar's Burguer</h1>
+      <header className="hero" id="inicio">
+        <img
+          src="/logo-cesars.png"
+          alt="Logo Cesar's Burguer"
+          className="hero-logo"
+        />
 
-        <p>Nesse império a fome é o inimigo dos gladiadores</p>
+        <h1>Cesar&apos;s Burguer</h1>
 
-        <p className="delivery-info">🚚 Entrega R$1,80 por km</p>
+        <p className="subtitle">
+          Nesse império a fome é o inimigo dos gladiadores.
+        </p>
+
+        <div className="delivery-banner">
+          🚚 Delivery por faixa de distância
+        </div>
+
+        <div className="delivery-table">
+          <span>Até 2,5 km = R$ 3,50</span>
+          <span>2,5 a 5 km = R$ 7,00</span>
+          <span>5 a 10 km = R$ 12,50</span>
+          <span>Acima de 10 km = R$ 17,00</span>
+        </div>
       </header>
 
-      <section className="menu">
+      <section className="menu-section" id="cardapio">
         <h2>Cardápio</h2>
 
         <div className="cards">
           {products.map((product) => (
-            <div className="card" key={product.id}>
-              <img src={product.image} />
+            <article className="card" key={product.id}>
+              <div className="card-image-wrap">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="card-img"
+                />
+              </div>
 
-              <h3>{product.name}</h3>
+              <div className="card-body">
+                <h3>{product.name}</h3>
+                <p>{product.description}</p>
+                <strong>{formatPrice(product.price)}</strong>
 
-              <p>{product.description}</p>
-
-              <strong>{formatPrice(product.price)}</strong>
-
-              <button onClick={() => addToCart(product)}>Adicionar</button>
-            </div>
+                <button onClick={() => addToCart(product)}>Adicionar</button>
+              </div>
+            </article>
           ))}
         </div>
       </section>
 
-      <section className="cart">
+      <section className="cart-section" id="pedido">
         <h2>Seu Pedido</h2>
+
+        {cart.length === 0 && <p className="empty">Seu carrinho está vazio.</p>}
 
         {cart.map((item) => (
           <div className="cart-item" key={item.id}>
-            <span>
-              {item.name} ({item.quantity})
-            </span>
+            <div className="cart-item-info">
+              <span className="cart-item-name">
+                {item.name} ({item.quantity})
+              </span>
+              <small>{formatPrice(item.price * item.quantity)}</small>
+            </div>
 
-            <div>
+            <div className="cart-controls">
               <button onClick={() => decrease(item.id)}>-</button>
               <button onClick={() => increase(item.id)}>+</button>
             </div>
           </div>
         ))}
 
-        <h3>Subtotal: {formatPrice(subtotal)}</h3>
+        <div className="totals-box">
+          <h3>Subtotal: {formatPrice(subtotal)}</h3>
 
-        <div className="delivery-calc">
-          <label>Distância em KM:</label>
+          <div className="delivery-calc">
+            <label htmlFor="distance">Distância em km</label>
 
-          <input
-            type="number"
-            value={distance}
-            onChange={(e) => setDistance(Number(e.target.value))}
-          />
+            <input
+              id="distance"
+              type="number"
+              min="0"
+              step="0.1"
+              value={distance}
+              onChange={(e) => {
+                const value = e.target.value;
+                setDistance(value === "" ? "" : Number(value));
+              }}
+              placeholder="Ex.: 4.5"
+            />
 
-          <p>Entrega: {formatPrice(deliveryFee)}</p>
+            <p className="delivery-range">{deliveryLabel}</p>
+            <p className="delivery-price">
+              Entrega: {formatPrice(deliveryFee)}
+            </p>
+          </div>
+
+          <h2 className="final-total">Total: {formatPrice(total)}</h2>
         </div>
-
-        <h2>Total: {formatPrice(total)}</h2>
 
         <div className="form">
           <input
@@ -206,7 +278,7 @@ ${storeAddress}`;
           />
 
           <input
-            placeholder="Endereço"
+            placeholder="Endereço completo"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
           />
@@ -228,6 +300,10 @@ ${storeAddress}`;
           Finalizar no WhatsApp
         </button>
       </section>
+
+      <a href="#pedido" className="order-fixed">
+        🛒 Pedido ({totalItems})
+      </a>
     </div>
   );
 }
