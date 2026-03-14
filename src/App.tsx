@@ -2,6 +2,11 @@ export default function App() {
   return (
     <div className="app">
       <header className="hero">
+        <img
+          src="/logo-cesars.png"
+          alt="Logo Cesar's Burguer"
+          className="hero-logo"
+        />
         <div className="overlay" />
         <div className="hero-content">
           <span className="badge">Versão Imperial 3.0</span>
