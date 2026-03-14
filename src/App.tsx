@@ -13,7 +13,7 @@ export default function App() {
               alt="Logo Cesar's Burguer"
               className="brand-mini-logo"
             />
-            <span>Cesar's Burguer</span>
+            <span>Cesar&apos;s Burguer</span>
           </div>
 
           <div className="topbar-links">
@@ -149,7 +149,7 @@ export default function App() {
 
           <div className="cta-box">
             <a
-              href="https://wa.me/5511932351231"
+              href="https://wa.me/5511984239383"
               target="_blank"
               rel="noreferrer"
               className="btn btn-primary"
@@ -161,7 +161,7 @@ export default function App() {
       </main>
 
       <a
-        href="https://wa.me/5511932351231"
+        href="https://wa.me/5511984239383"
         target="_blank"
         rel="noreferrer"
         className="whatsapp-float"
