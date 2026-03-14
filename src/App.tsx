@@ -114,35 +114,38 @@ export default function App() {
       currency: "BRL",
     });
 
-  const sendOrderToWhatsApp = () => {
-    if (cart.length === 0) {
-      alert("Seu carrinho está vazio.");
-      return;
-    }
-
-    const phone = "5511932351231";
-
-    const itemsText = cart
-      .map(
-        (item) =>
-          `- ${item.quantity}x ${item.name} — ${formatPrice(
-            item.price * item.quantity
-          )}`
-      )
-      .join("\n");
-
-    const message =
-      Olá! Quero fazer um pedido na Cesar's Burguer:%0A%0A +
-      Nome: ${name || "Não informado"}%0A +
-      Endereço: ${address || "Não informado"}%0A +
-      Pagamento: ${payment || "Não informado"}%0A +
-      Observações: ${notes || "Nenhuma"}%0A%0A +
-      Pedido:%0A${itemsText}%0A%0A +
-      Total: ${formatPrice(totalPrice)};
-
-    const url = https://wa.me/${phone}?text=${message};
-    window.open(url, "_blank");
-  };
+    const sendOrderToWhatsApp = () => {
+      if (cart.length === 0) {
+        alert("Seu carrinho está vazio.");
+        return;
+      }
+    
+      const phone = "5511932351231";
+    
+      const itemsText = cart
+        .map(
+          (item) =>
+            `- ${item.quantity}x ${item.name} — ${formatPrice(
+              item.price * item.quantity
+            )}`
+        )
+        .join("\n");
+    
+      const message = `Olá! Quero fazer um pedido na Cesar's Burguer:
+    
+    Nome: ${name || "Não informado"}
+    Endereço: ${address || "Não informado"}
+    Pagamento: ${payment || "Não informado"}
+    Observações: ${notes || "Nenhuma"}
+    
+    Pedido:
+    ${itemsText}
+    
+    Total: ${formatPrice(totalPrice)}`;
+    
+      const url = https://wa.me/${phone}?text=${encodeURIComponent(message)};
+      window.open(url, "_blank");
+    };
 
   return (
     <div className="app">
