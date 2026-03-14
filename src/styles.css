@@ -20,8 +20,11 @@ a {
 
 .app {
   min-height: 100vh;
-  background:
-    radial-gradient(circle at top, rgba(25, 76, 255, 0.18), transparent 35%),
+  background: radial-gradient(
+      circle at top,
+      rgba(25, 76, 255, 0.18),
+      transparent 35%
+    ),
     linear-gradient(180deg, #040404 0%, #0a0b14 100%);
 }
 
@@ -30,9 +33,16 @@ a {
   min-height: 100vh;
   padding: 24px 20px 60px;
   overflow: hidden;
-  background:
-    radial-gradient(circle at center, rgba(212, 175, 55, 0.12), transparent 30%),
-    radial-gradient(circle at top right, rgba(25, 76, 255, 0.2), transparent 30%);
+  background: radial-gradient(
+      circle at center,
+      rgba(212, 175, 55, 0.12),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at top right,
+      rgba(25, 76, 255, 0.2),
+      transparent 30%
+    );
 }
 
 .overlay {
@@ -128,8 +138,7 @@ a {
   width: min(430px, 82vw);
   max-width: 100%;
   margin-bottom: 24px;
-  filter:
-    drop-shadow(0 0 26px rgba(18, 59, 255, 0.28))
+  filter: drop-shadow(0 0 26px rgba(18, 59, 255, 0.28))
     drop-shadow(0 0 22px rgba(212, 175, 55, 0.22));
 }
 
@@ -228,4 +237,5 @@ a {
 .section-text {
   text-align: center;
   color: #d9d9d9;
-  margin-bottom: 36px: 
+  margin-bottom: 36px;
+}
