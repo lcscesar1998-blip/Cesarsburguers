@@ -126,7 +126,7 @@ export default function App() {
         <img
           src="/logo-cesars.png"
           alt="Logo Cesar's Burguer"
-          className="footer-logo"
+          className="hero-logo"
         />
         <p>Cesar&apos;s Burguer © 2026 - Todos os direitos reservados</p>
       </footer>
