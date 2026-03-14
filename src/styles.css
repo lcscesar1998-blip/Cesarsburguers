@@ -50,3 +50,152 @@ a {
   z-index: 1;
   max-width: 900px;
 }
+
+.badge {
+  display: inline-block;
+  margin-bottom: 18px;
+  padding: 8px 16px;
+  border: 1px solid #ffb300;
+  border-radius: 999px;
+  color: #ffcc4d;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.hero h1 {
+  font-size: 56px;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.subtitle {
+  max-width: 700px;
+  margin: 0 auto 28px;
+  font-size: 20px;
+  color: #f0d9a6;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: 0.25s ease;
+}
+
+.btn-primary {
+  background: #ffb300;
+  color: #111111;
+}
+
+.btn-primary:hover {
+  background: #ffc533;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  border: 1px solid #ffffff;
+  color: #ffffff;
+}
+
+.btn-secondary:hover {
+  background: #ffffff;
+  color: #111111;
+}
+
+.section {
+  padding: 70px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dark-section {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 12px;
+  color: #ffcc4d;
+}
+
+.section-text {
+  text-align: center;
+  color: #dddddd;
+  margin-bottom: 36px;
+  font-size: 18px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #1f1f1f;
+  border: 1px solid rgba(255, 179, 0, 0.15);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.card h3 {
+  color: #ffffff;
+  margin-bottom: 12px;
+  font-size: 24px;
+}
+
+.card p {
+  color: #d7d7d7;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.card strong {
+  color: #ffcc4d;
+  font-size: 22px;
+}
+
+.featured {
+  border: 1px solid #ffb300;
+  transform: scale(1.02);
+}
+
+.cta-box {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.footer {
+  text-align: center;
+  padding: 30px 20px;
+  color: #c9c9c9;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 40px;
+  }
+
+  .subtitle {
+    font-size: 18px;
+  }
+
+  .section-title {
+    font-size: 30px;
+  }
+}
