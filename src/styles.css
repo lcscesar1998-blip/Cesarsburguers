@@ -40,8 +40,8 @@ body {
   background-image: url("../public/logo-cesars.png");
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: min(70vw, 900px);
-  opacity: 0.1;
+  background-size: min(80vw, 1050px);
+  opacity: 0.11;
   filter: grayscale(0.08) drop-shadow(0 0 18px rgba(212, 175, 55, 0.06));
   pointer-events: none;
   z-index: 0;
@@ -94,9 +94,9 @@ body {
 }
 
 .hero-logo {
-  width: 112px;
-  max-width: 28vw;
-  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.45));
+  width: 190px;
+  max-width: 46vw;
+  filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.5));
 }
 
 .hero-title {
