@@ -278,20 +278,24 @@ Observações: ${notes || "Nenhuma"}`;
       </nav>
 
       <header className="hero" id="inicio">
+        <div className="hero-overlay"></div>
+        <div className="hero-smoke"></div>
+        <div className="hero-smoke hero-smoke-2"></div>
+        <div className="hero-smoke hero-smoke-3"></div>
+
         <img
           src="/logo-cesars.png"
           alt="Logo Cesar's Burguer"
           className="hero-logo"
         />
 
-        <h1 className="hero-title">Cesar's Burguer</h1>
+        <h1 className="hero-title">Cesar&apos;s Burguer</h1>
 
         <div className="hero-copy-box">
           <p className="subtitle">
-            Hambúrgueres artesanais forjados em{""}
-            <span className="magma-fire"> magma </span>
-            {""}
-            para verdadeiros gladiadores.
+            Hambúrgueres artesanais forjados em{" "}
+            <span className="magma-fire">magma</span> para verdadeiros
+            gladiadores.
           </p>
 
           <p className="hero-small">

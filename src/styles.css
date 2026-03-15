@@ -39,10 +39,10 @@ body {
   inset: 0;
   background-image: url("../public/logo-cesars.png");
   background-repeat: no-repeat;
-  background-position: center center;
-  background-size: min(80vw, 1050px);
+  background-position: center 180px;
+  background-size: min(78vw, 1050px);
   opacity: 0.11;
-  filter: grayscale(0.08) drop-shadow(0 0 18px rgba(212, 175, 55, 0.06));
+  filter: grayscale(0.02) drop-shadow(0 0 18px rgba(212, 175, 55, 0.06));
   pointer-events: none;
   z-index: 0;
 }
@@ -90,12 +90,15 @@ body {
 .hero {
   position: relative;
   text-align: center;
-  padding: 84px 20px 56px;
+  padding: 90px 20px 70px;
+  overflow: hidden;
 }
 
 .hero-logo {
-  width: 200px;
-  max-width: 50vw;
+  position: relative;
+  z-index: 2;
+  width: 190px;
+  max-width: 46vw;
   filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.5));
 }
 
@@ -554,5 +557,163 @@ body {
     left: 14px;
     bottom: 14px;
     text-align: center;
+  }
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 110, 255, 0.22) 0%,
+    rgba(3, 14, 47, 0.1) 35%,
+    rgba(0, 0, 0, 0.72) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-smoke {
+  position: absolute;
+  left: 50%;
+  top: 120px;
+  width: 420px;
+  height: 180px;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(180, 180, 180, 0.08) 28%,
+    rgba(80, 80, 80, 0.04) 55%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  filter: blur(28px);
+  opacity: 0.28;
+  animation: heroSmoke 7s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-smoke-2 {
+  top: 170px;
+  width: 520px;
+  height: 220px;
+  opacity: 0.18;
+  animation-delay: 1.8s;
+}
+
+.hero-smoke-3 {
+  top: 210px;
+  width: 620px;
+  height: 240px;
+  opacity: 0.12;
+  animation-delay: 3.2s;
+}
+
+@keyframes heroSmoke {
+  0% {
+    transform: translateX(-50%) translateY(0) scale(1);
+    opacity: 0.12;
+  }
+  50% {
+    transform: translateX(-50%) translateY(-14px) scale(1.06);
+    opacity: 0.28;
+  }
+  100% {
+    transform: translateX(-50%) translateY(0) scale(1);
+    opacity: 0.12;
+  }
+}
+
+.magma-fire {
+  display: inline-block !important;
+  position: relative;
+  font-weight: 900;
+  background: linear-gradient(
+    180deg,
+    #fff27a 0%,
+    #ffb300 20%,
+    #ff6a00 45%,
+    #ff2f00 72%,
+    #8f1200 100%
+  ) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  text-shadow: 0 0 8px rgba(255, 140, 0, 0.55), 0 0 16px rgba(255, 80, 0, 0.45),
+    0 0 28px rgba(255, 30, 0, 0.35);
+  animation: magmaBurn 1.2s ease-in-out infinite;
+}
+
+.magma-fire::before {
+  content: "magma";
+  position: absolute;
+  left: 0;
+  top: -6px;
+  z-index: -1;
+  color: rgba(255, 120, 0, 0.22);
+  filter: blur(6px);
+  animation: magmaSmoke 1.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes magmaBurn {
+  0% {
+    transform: translateY(0) scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: translateY(-2px) scale(1.03);
+    filter: brightness(1.35);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    filter: brightness(1);
+  }
+}
+
+@keyframes magmaSmoke {
+  0% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-3px);
+  }
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 700px) {
+  .hero-logo {
+    width: 130px;
+    max-width: 50vw;
+  }
+
+  .hero-smoke {
+    width: 280px;
+    height: 120px;
+    top: 90px;
+  }
+
+  .hero-smoke-2 {
+    width: 340px;
+    height: 140px;
+    top: 130px;
+  }
+
+  .hero-smoke-3 {
+    width: 420px;
+    height: 160px;
+    top: 160px;
+  }
+
+  .app::before {
+    background-size: min(95vw, 760px);
+    background-position: center 140px;
+    opacity: 0.09;
   }
 }
