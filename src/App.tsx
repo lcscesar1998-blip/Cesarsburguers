@@ -294,9 +294,8 @@ Observações: ${notes || "Nenhuma"}`;
         <div className="hero-copy-box">
           <p className="subtitle">
             Hambúrgueres artesanais forjados em{" "}
-            <span className="magma-fire">
-            </span>{" "}
-            para verdadeiros gladiadores.
+            <span className="magma-fire">{""}</span> para verdadeiros
+            gladiadores.
           </p>
 
           <p className="hero-small">
