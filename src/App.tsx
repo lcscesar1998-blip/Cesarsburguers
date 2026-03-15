@@ -1,10 +1,19 @@
 import React, { useMemo, useState } from "react";
 import "./styles.css";
 
-const storeAddress =
-  "Rua Quinta da Conraria, 38 - Parque Santo Antônio, São Paulo - SP - 05852-480";
+type Product = {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  description: string;
+};
 
-const products = [
+type CartItem = Product & {
+  quantity: number;
+};
+
+const products: Product[] = [
   {
     id: 1,
     name: "Smash Clássico",
@@ -35,77 +44,70 @@ const products = [
   },
 ];
 
-function getDeliveryFee(distance: number) {
-  if (distance <= 0) return 0;
-  if (distance <= 2.5) return 3.5;
-  if (distance <= 5) return 7;
-  if (distance <= 10) return 12.5;
-  return 17;
-}
+function calcularEntregaPorRegiao(
+  bairro: string,
+  cidade: string,
+  uf: string
+): { fee: number; faixa: string } {
+  const bairroNormalizado = bairro.toLowerCase().trim();
+  const cidadeNormalizada = cidade.toLowerCase().trim();
+  const ufNormalizada = uf.toLowerCase().trim();
 
-function getDeliveryLabel(distance: number) {
-  if (distance <= 0) return "Informe a distância";
-  if (distance <= 2.5) return "Até 2,5 km";
-  if (distance <= 5) return "De 2,5 km até 5 km";
-  if (distance <= 10) return "De 5 km até 10 km";
-  return "Acima de 10 km";
+  if (
+    (cidadeNormalizada !== "são paulo" && cidadeNormalizada !== "sao paulo") ||
+    ufNormalizada !== "sp"
+  ) {
+    return { fee: 17, faixa: "Acima de 10 km" };
+  }
+
+  if (
+    bairroNormalizado.includes("parque santo antônio") ||
+    bairroNormalizado.includes("parque santo antonio")
+  ) {
+    return { fee: 3.5, faixa: "Até 2,5 km" };
+  }
+
+  if (
+    bairroNormalizado.includes("capão redondo") ||
+    bairroNormalizado.includes("capao redondo") ||
+    bairroNormalizado.includes("jardim são luís") ||
+    bairroNormalizado.includes("jardim sao luis")
+  ) {
+    return { fee: 7, faixa: "De 2,5 km até 5 km" };
+  }
+
+  if (
+    bairroNormalizado.includes("campo limpo") ||
+    bairroNormalizado.includes("jardim ângela") ||
+    bairroNormalizado.includes("jardim angela") ||
+    bairroNormalizado.includes("vila das belezas")
+  ) {
+    return { fee: 12.5, faixa: "De 5 km até 10 km" };
+  }
+
+  return { fee: 17, faixa: "Acima de 10 km" };
 }
 
 export default function App() {
-  const [cart, setCart] = useState<any[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [name, setName] = useState("");
+  const [cep, setCep] = useState("");
   const [address, setAddress] = useState("");
+  const [number, setNumber] = useState("");
+  const [complement, setComplement] = useState("");
   const [payment, setPayment] = useState("");
   const [notes, setNotes] = useState("");
-  const [distance, setDistance] = useState<number | "">("");
-
-  const addToCart = (product: any) => {
-    const existing = cart.find((item) => item.id === product.id);
-
-    if (existing) {
-      setCart(
-        cart.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        )
-      );
-      return;
-    }
-
-    setCart([...cart, { ...product, quantity: 1 }]);
-  };
-
-  const increase = (id: number) => {
-    setCart(
-      cart.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
-  };
-
-  const decrease = (id: number) => {
-    setCart(
-      cart
-        .map((item) =>
-          item.id === id ? { ...item, quantity: item.quantity - 1 } : item
-        )
-        .filter((item) => item.quantity > 0)
-    );
-  };
+  const [loadingCep, setLoadingCep] = useState(false);
+  const [cepError, setCepError] = useState("");
+  const [deliveryFee, setDeliveryFee] = useState<number | null>(null);
+  const [deliveryRange, setDeliveryRange] = useState("");
+  const [totalItems, setTotalItems] = useState(0);
 
   const subtotal = useMemo(() => {
     return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   }, [cart]);
 
-  const totalItems = useMemo(() => {
-    return cart.reduce((sum, item) => sum + item.quantity, 0);
-  }, [cart]);
-
-  const numericDistance = typeof distance === "number" ? distance : 0;
-  const deliveryFee = getDeliveryFee(numericDistance);
-  const deliveryLabel = getDeliveryLabel(numericDistance);
-  const total = subtotal + deliveryFee;
+  const total = subtotal + (deliveryFee ?? 0);
 
   const formatPrice = (value: number) =>
     value.toLocaleString("pt-BR", {
@@ -113,25 +115,121 @@ export default function App() {
       currency: "BRL",
     });
 
-  const sendOrderToWhatsApp = () => {
+  const updateTotalItems = (updatedCart: CartItem[]) => {
+    const totalQuantidade = updatedCart.reduce(
+      (sum, item) => sum + item.quantity,
+      0
+    );
+    setTotalItems(totalQuantidade);
+  };
+
+  const addToCart = (product: Product) => {
+    const existing = cart.find((item) => item.id === product.id);
+    let updatedCart: CartItem[];
+
+    if (existing) {
+      updatedCart = cart.map((item) =>
+        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+      );
+    } else {
+      updatedCart = [...cart, { ...product, quantity: 1 }];
+    }
+
+    setCart(updatedCart);
+    updateTotalItems(updatedCart);
+  };
+
+  const increase = (id: number) => {
+    const updatedCart = cart.map((item) =>
+      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+    );
+
+    setCart(updatedCart);
+    updateTotalItems(updatedCart);
+  };
+
+  const decrease = (id: number) => {
+    const updatedCart = cart
+      .map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+      )
+      .filter((item) => item.quantity > 0);
+
+    setCart(updatedCart);
+    updateTotalItems(updatedCart);
+  };
+
+  const buscarCep = async () => {
+    const cepLimpo = cep.replace(/\D/g, "");
+
+    if (cepLimpo.length !== 8) {
+      setCepError("Digite um CEP válido com 8 números.");
+      setAddress("");
+      setDeliveryFee(null);
+      setDeliveryRange("");
+      return;
+    }
+
+    try {
+      setLoadingCep(true);
+      setCepError("");
+
+      const response = await fetch(
+        `https://viacep.com.br/ws/${cepLimpo}/json/`
+      );
+      const data = await response.json();
+
+      if (data.erro) {
+        setCepError("CEP não encontrado.");
+        setAddress("");
+        setDeliveryFee(null);
+        setDeliveryRange("");
+        return;
+      }
+
+      const enderecoCompleto = `${data.logradouro || ""}${
+        data.bairro ? ` - ${data.bairro}` : ""
+      }${data.localidade ? ` - ${data.localidade}` : ""}${
+        data.uf ? ` - ${data.uf}` : ""
+      }`;
+
+      setAddress(enderecoCompleto);
+
+      const entrega = calcularEntregaPorRegiao(
+        data.bairro || "",
+        data.localidade || "",
+        data.uf || ""
+      );
+
+      setDeliveryFee(entrega.fee);
+      setDeliveryRange(entrega.faixa);
+    } catch (error) {
+      setCepError("Não foi possível consultar o CEP.");
+      setAddress("");
+      setDeliveryFee(null);
+      setDeliveryRange("");
+    } finally {
+      setLoadingCep(false);
+    }
+  };
+
+  const enviarPedido = () => {
     if (cart.length === 0) {
       alert("Seu carrinho está vazio.");
       return;
     }
 
     if (!name.trim()) {
-      alert("Informe o nome do cliente.");
+      alert("Informe seu nome.");
       return;
     }
 
-    if (!address.trim()) {
-      alert("Informe o endereço de entrega.");
+    if (!cep.trim()) {
+      alert("Informe o CEP.");
       return;
     }
 
-    const phone = "5511932351231";
-
-    const items = cart
+    const itens = cart
       .map(
         (item) =>
           `${item.quantity}x ${item.name} - ${formatPrice(
@@ -140,25 +238,34 @@ export default function App() {
       )
       .join("\n");
 
+    const enderecoFinal = `${address}${number ? `, nº ${number}` : ""}${
+      complement ? ` - ${complement}` : ""
+    }`;
+
     const message = `Pedido - Cesar's Burguer
 
 Cliente: ${name}
-Endereço: ${address}
+CEP: ${cep}
+Endereço: ${enderecoFinal}
 
 Pedido:
-${items}
+${itens}
 
 Subtotal: ${formatPrice(subtotal)}
-Entrega: ${formatPrice(deliveryFee)} (${deliveryLabel})
+${
+  deliveryFee !== null
+    ? `Entrega: ${formatPrice(deliveryFee)} (${deliveryRange})`
+    : "Entrega: a confirmar"
+}
 Total: ${formatPrice(total)}
 
 Pagamento: ${payment || "Não informado"}
-Observações: ${notes || "Nenhuma"}
+Observações: ${notes || "Nenhuma"}`;
 
-Origem da loja:
-${storeAddress}`;
+    const url = `https://wa.me/5511932351231?text=${encodeURIComponent(
+      message
+    )}`;
 
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
   };
 
@@ -180,20 +287,25 @@ ${storeAddress}`;
         <h1>Cesar&apos;s Burguer</h1>
 
         <p className="subtitle">
-          Nesse império a fome é o inimigo dos gladiadores.
+          Onde gladiadores vencem a fome com sabor e atitude.
         </p>
 
-        <div className="delivery-banner">
-          🚚 Delivery por faixa de distância
+        <div className="hero-copy">
+          Hambúrgueres artesanais, identidade forte e pedido rápido direto pelo
+          site.
         </div>
 
-        <div className="delivery-table">
-          <span>Até 2,5 km = R$ 3,50</span>
-          <span>2,5 a 5 km = R$ 7,00</span>
-          <span>5 a 10 km = R$ 12,50</span>
-          <span>Acima de 10 km = R$ 17,00</span>
-        </div>
+        <a href="#cardapio" className="hero-button">
+          Ver cardápio
+        </a>
       </header>
+
+      <section className="benefits-section">
+        <div className="benefit-card">🔥 Carne artesanal</div>
+        <div className="benefit-card">🧀 Ingredientes selecionados</div>
+        <div className="benefit-card">⚡ Pedido rápido</div>
+        <div className="benefit-card">🚚 Delivery na região</div>
+      </section>
 
       <section className="menu-section" id="cardapio">
         <h2>Cardápio</h2>
@@ -245,58 +357,70 @@ ${storeAddress}`;
         <div className="totals-box">
           <h3>Subtotal: {formatPrice(subtotal)}</h3>
 
-          <div className="delivery-calc">
-            <label htmlFor="distance">Distância em km</label>
-
+          <div className="form">
             <input
-              id="distance"
-              type="number"
-              min="0"
-              step="0.1"
-              value={distance}
-              onChange={(e) => {
-                const value = e.target.value;
-                setDistance(value === "" ? "" : Number(value));
-              }}
-              placeholder="Ex.: 4.5"
+              placeholder="Seu nome"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
 
-            <p className="delivery-range">{deliveryLabel}</p>
-            <p className="delivery-price">
-              Entrega: {formatPrice(deliveryFee)}
-            </p>
+            <div className="cep-row">
+              <input
+                placeholder="Digite seu CEP"
+                value={cep}
+                onChange={(e) => setCep(e.target.value)}
+              />
+
+              <button
+                type="button"
+                className="cep-button"
+                onClick={buscarCep}
+                disabled={loadingCep}
+              >
+                {loadingCep ? "Buscando..." : "Buscar CEP"}
+              </button>
+            </div>
+
+            {cepError && <p className="cep-error">{cepError}</p>}
+
+            {address && <p className="address-preview">{address}</p>}
+
+            <input
+              placeholder="Número"
+              value={number}
+              onChange={(e) => setNumber(e.target.value)}
+            />
+
+            <input
+              placeholder="Complemento"
+              value={complement}
+              onChange={(e) => setComplement(e.target.value)}
+            />
+
+            <input
+              placeholder="Forma de pagamento"
+              value={payment}
+              onChange={(e) => setPayment(e.target.value)}
+            />
+
+            <textarea
+              placeholder="Observações"
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+            />
           </div>
+
+          {deliveryFee !== null && (
+            <div className="delivery-box">
+              <p>Entrega: {formatPrice(deliveryFee)}</p>
+              <p>Faixa: {deliveryRange}</p>
+            </div>
+          )}
 
           <h2 className="final-total">Total: {formatPrice(total)}</h2>
         </div>
 
-        <div className="form">
-          <input
-            placeholder="Seu nome"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-
-          <input
-            placeholder="Endereço completo"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-
-          <input
-            placeholder="Forma de pagamento"
-            value={payment}
-            onChange={(e) => setPayment(e.target.value)}
-          />
-
-          <textarea
-            placeholder="Observações"
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-          />
-        </div>
-
-        <button className="whatsapp" onClick={sendOrderToWhatsApp}>
+        <button className="whatsapp" onClick={enviarPedido}>
           Finalizar no WhatsApp
         </button>
       </section>
