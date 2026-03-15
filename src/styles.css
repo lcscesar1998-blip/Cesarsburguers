@@ -101,10 +101,11 @@ body {
 .hero-logo {
   position: relative;
   z-index: 2;
-  width: 320px;
-  max-width: 70vw;
-  filter: drop-shadow(0 12px 34px rgba(0, 0, 0, 0.1));
+  width: 420px;
+  max-width: 78vw;
+  filter: drop-shadow(0 12px 34px rgba(0, 0, 0, 0.55));
   margin-bottom: 10px;
+  transform: scale(1.15);
 }
 
 .hero-title {
