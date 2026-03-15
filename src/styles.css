@@ -37,7 +37,7 @@ body {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: url("/logo-cesars.png");
+  background-image: url("../public/logo-cesars.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: min(42vw, 520px);
