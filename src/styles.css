@@ -734,3 +734,110 @@ body {
     opacity: 0.09;
   }
 }
+@media (max-width: 768px) {
+  .topbar {
+    gap: 16px;
+    padding: 12px 10px;
+    flex-wrap: wrap;
+  }
+
+  .topbar a {
+    font-size: 16px;
+  }
+
+  .hero {
+    padding: 50px 14px 30px;
+  }
+
+  .hero-logo {
+    width: 180px;
+    max-width: 60vw;
+    transform: scale(1);
+    margin-bottom: 12px;
+  }
+
+  .hero-title {
+    font-size: 38px;
+    line-height: 1.1;
+    letter-spacing: 1px;
+  }
+
+  .hero-copy-box {
+    max-width: 100%;
+    padding: 20px 16px;
+    border-radius: 20px;
+    margin-top: 20px;
+  }
+
+  .subtitle {
+    font-size: 30px;
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+
+  .hero-small {
+    font-size: 17px;
+    line-height: 1.4;
+  }
+
+  .hero-button {
+    width: 100%;
+    max-width: 280px;
+    font-size: 17px;
+    padding: 14px 20px;
+  }
+
+  .benefits-section {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 0 14px;
+  }
+
+  .menu-section h2,
+  .cart-section h2 {
+    font-size: 34px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .card {
+    border-radius: 20px;
+  }
+
+  .card-img {
+    height: 220px;
+  }
+
+  .card-body h3 {
+    font-size: 24px;
+  }
+
+  .card-body strong {
+    font-size: 28px;
+  }
+
+  .cep-row {
+    grid-template-columns: 1fr;
+  }
+
+  .cep-button {
+    height: 48px;
+  }
+
+  .order-fixed {
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+    text-align: center;
+    padding: 14px 18px;
+  }
+
+  .app::before {
+    background-size: min(95vw, 700px);
+    background-position: center 180px;
+    opacity: 0.08;
+  }
+}
