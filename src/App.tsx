@@ -116,11 +116,11 @@ export default function App() {
     });
 
   const updateTotalItems = (updatedCart: CartItem[]) => {
-    const totalQuantidade = updatedCart.reduce(
+    const quantidade = updatedCart.reduce(
       (sum, item) => sum + item.quantity,
       0
     );
-    setTotalItems(totalQuantidade);
+    setTotalItems(quantidade);
   };
 
   const addToCart = (product: Product) => {
@@ -293,7 +293,7 @@ Observações: ${notes || "Nenhuma"}`;
 
         <div className="hero-copy-box">
           <p className="subtitle">
-            Hambúrgueres artesanais forjados em {""}
+            Hambúrgueres artesanais forjados em{" "}
             <span className="magma-fire">magma</span> para verdadeiros
             gladiadores.
           </p>
@@ -390,7 +390,6 @@ Observações: ${notes || "Nenhuma"}`;
             </div>
 
             {cepError && <p className="cep-error">{cepError}</p>}
-
             {address && <p className="address-preview">{address}</p>}
 
             <input
