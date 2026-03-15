@@ -428,3 +428,88 @@ body {
     text-align: center;
   }
 }
+/* ===== HERO / INTRODUÇÃO ===== */
+
+.hero-title {
+  font-size: 42px;
+  font-weight: 800;
+  color: white;
+  margin-top: 10px;
+}
+
+.hero-copy-box {
+  max-width: 900px;
+  margin: 25px auto;
+  padding: 25px;
+  border-radius: 18px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(3, 14, 47, 0.85),
+    rgba(0, 0, 0, 0.45)
+  );
+
+  border: 1px solid rgba(182, 154, 0, 0.35);
+
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+}
+
+.subtitle {
+  font-size: 40px;
+  font-weight: 900;
+  line-height: 1.2;
+  text-align: center;
+  color: white;
+}
+
+.hero-small {
+  margin-top: 15px;
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+/* ===== BOTÃO CARDÁPIO ===== */
+
+.hero-button {
+  display: inline-block;
+  margin-top: 25px;
+
+  padding: 14px 32px;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  color: #030e2f;
+
+  background: linear-gradient(180deg, #ffd700, #b69a00);
+
+  border-radius: 10px;
+
+  text-decoration: none;
+
+  transition: 0.25s;
+}
+
+.hero-button:hover {
+  transform: scale(1.05);
+
+  box-shadow: 0 6px 18px rgba(182, 154, 0, 0.5);
+}
+
+/* ===== TEXTO MAGMA ===== */
+
+.magma-text {
+  background: linear-gradient(
+    180deg,
+    #ffd700 0%,
+    #ff8c00 30%,
+    #ff3c00 60%,
+    #b31200 100%
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow: 0 0 8px rgba(255, 120, 0, 0.4), 0 0 14px rgba(255, 70, 0, 0.3),
+    0 0 24px rgba(255, 30, 0, 0.25);
+}

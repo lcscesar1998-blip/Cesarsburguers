@@ -284,20 +284,23 @@ Observações: ${notes || "Nenhuma"}`;
           className="hero-logo"
         />
 
-        <h1>Cesar&apos;s Burguer</h1>
+        <h1 className="hero-title">Cesar's Burguer</h1>
 
-        <p className="subtitle">
-          Onde gladiadores vencem a fome com sabor e atitude.
-        </p>
+        <div className="hero-copy-box">
+          <p className="subtitle">
+            Hambúrgueres artesanais forjados em
+            <span className="magma-text"> magma </span>
+            para verdadeiros gladiadores.
+          </p>
 
-        <div className="hero-copy">
-          Hambúrgueres artesanais, identidade forte e pedido rápido direto pelo
-          site.
+          <p className="hero-small">
+            Sabor marcante, identidade forte e pedido rápido direto pelo site.
+          </p>
+
+          <a href="#cardapio" className="hero-button">
+            Escolher meu Burger
+          </a>
         </div>
-
-        <a href="#cardapio" className="hero-button">
-          Ver cardápio
-        </a>
       </header>
 
       <section className="benefits-section">
