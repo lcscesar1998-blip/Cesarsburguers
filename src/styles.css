@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600&display=swap");
 /* ===== SITE PREMIUM + MARCA D'ÁGUA ===== */
 
 :root {
@@ -16,6 +17,8 @@ html {
 }
 
 body {
+  font-family: "Inter", sans-serif;
+
   background: radial-gradient(
       circle at top center,
       rgba(23, 98, 255, 0.2) 0%,
@@ -23,6 +26,7 @@ body {
       rgba(0, 0, 0, 0.92) 100%
     ),
     linear-gradient(180deg, #06142f 0%, #030913 100%);
+
   color: var(--white);
 }
 
@@ -103,12 +107,10 @@ body {
 }
 
 .hero-title {
-  margin: 14px 0 8px;
-  font-size: 56px;
-  font-weight: 900;
-  color: var(--white);
-  letter-spacing: -1px;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  font-family: "Cinzel", serif;
+  font-size: 54px;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .hero-copy-box {
@@ -126,14 +128,12 @@ body {
   backdrop-filter: blur(8px);
 }
 
-.subtitle {
-  margin: 0;
-  font-size: 52px;
-  font-weight: 900;
-  line-height: 1.12;
-  color: #fff;
-  text-align: center;
-  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.3);
+.hero-title {
+  font-family: "Cinzel", serif;
+  font-size: 54px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 22px rgba(212, 175, 55, 0.18);
 }
 
 .hero-small {
@@ -575,38 +575,45 @@ body {
 .hero-smoke {
   position: absolute;
   left: 50%;
-  top: 120px;
-  width: 420px;
-  height: 180px;
+  top: 90px;
+
+  width: 650px;
+  height: 260px;
+
   transform: translateX(-50%);
+
   background: radial-gradient(
     ellipse at center,
-    rgba(255, 255, 255, 0.12) 0%,
-    rgba(180, 180, 180, 0.08) 28%,
-    rgba(80, 80, 80, 0.04) 55%,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(200, 200, 200, 0.18) 25%,
+    rgba(140, 140, 140, 0.1) 50%,
     rgba(0, 0, 0, 0) 100%
   );
-  filter: blur(28px);
-  opacity: 0.28;
+
+  filter: blur(36px);
+
+  opacity: 0.55;
+
   animation: heroSmoke 7s ease-in-out infinite;
+
   pointer-events: none;
   z-index: 1;
 }
 
 .hero-smoke-2 {
-  top: 170px;
-  width: 520px;
-  height: 220px;
-  opacity: 0.18;
-  animation-delay: 1.8s;
+  top: 150px;
+  width: 820px;
+  height: 320px;
+  opacity: 0.45;
+  animation-delay: 1.6s;
 }
 
 .hero-smoke-3 {
-  top: 210px;
-  width: 620px;
-  height: 240px;
-  opacity: 0.12;
-  animation-delay: 3.2s;
+  top: 220px;
+  width: 950px;
+  height: 380px;
+  opacity: 0.35;
+  animation-delay: 3s;
 }
 
 @keyframes heroSmoke {
