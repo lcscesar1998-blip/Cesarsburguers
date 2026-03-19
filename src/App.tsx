@@ -271,13 +271,13 @@ Observações: ${notes || "Nenhuma"}`;
 
   return (
     <div className="app">
-      <nav className="topbar">
+      <nav className="topbar" translate="no">
         <a href="#inicio">Início</a>
         <a href="#cardapio">Cardápio</a>
         <a href="#pedido">Pedido</a>
       </nav>
 
-      <header className="hero" id="inicio">
+      <header className="hero" id="inicio" translate="no">
         <div className="hero-overlay"></div>
         <div className="hero-smoke"></div>
         <div className="hero-smoke hero-smoke-2"></div>
