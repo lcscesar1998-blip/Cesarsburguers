@@ -410,12 +410,15 @@ body {
 .form input,
 .form textarea {
   width: 100%;
-  border: 1px solid rgba(212, 175, 55, 0.16);
-  border-radius: 14px;
-  padding: 14px 16px;
+  max-width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.05);
-  color: #fff;
-  outline: none;
+  color: white;
+  font-size: 14px;
+
+  box-sizing: border-box;
 }
 
 .form input::placeholder,
@@ -429,19 +432,14 @@ body {
 }
 
 .cep-row {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 12px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.cep-button {
-  border: none;
-  border-radius: 14px;
-  padding: 0 18px;
-  font-weight: 800;
-  color: #08152f;
-  background: linear-gradient(180deg, #f8df7a 0%, #d4af37 55%, #b68900 100%);
-  cursor: pointer;
+cep-button {
+  min-width: 120px;
+  white-space: nowrap;
 }
 
 .address-preview,
@@ -735,5 +733,14 @@ body {
     background-size: min(95vw, 760px);
     background-position: center 140px;
     opacity: 0.09;
+  }
+}
+@media (max-width: 768px) {
+  .cep-row {
+    flex-direction: column;
+  }
+
+  .cep-button {
+    width: 100%;
   }
 }
