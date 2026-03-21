@@ -86,11 +86,14 @@ button {
   pointer-events: none;
   z-index: 0;
   background: radial-gradient(
-    circle at center,
-    rgba(35, 116, 255, 0.16) 0%,
-    rgba(3, 14, 47, 0.05) 45%,
-    rgba(0, 0, 0, 0) 72%
-  );
+      circle at center,
+      rgba(35, 116, 255, 0.16) 0%,
+      rgba(3, 14, 47, 0.05) 45%,
+      rgba(0, 0, 0, 0) 72%
+    ),
+    url("/logo.png") center no-repeat;
+  background-size: auto, 400px;
+  opacity: 0.06;
 }
 
 .app > * {
@@ -1278,30 +1281,17 @@ button {
     justify-content: flex-end;
   }
 }
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 9999;
-  backdrop-filter: blur(10px);
-  background: rgba(0, 0, 0, 0.6);
-}
 .hero-logo {
+  position: relative;
+  z-index: 2;
   width: 120px;
-  margin-bottom: 20px;
+  margin: 0 auto 20px;
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.4));
 }
 
 @media (max-width: 768px) {
   .hero-logo {
     width: 90px;
+    margin-bottom: 16px;
   }
-}
-.app::before {
-  content: "";
-  position: relative;
-  inset: 0;
-  background: url("./assets/logo.png") center no-repeat;
-  background-size: 400px;
-  opacity: 0.03;
-  pointer-events: none;
-  z-index: 0;
 }
