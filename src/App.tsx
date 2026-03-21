@@ -891,19 +891,16 @@ Observações gerais: ${generalNotes || "Nenhuma"}`;
                 value={customer.name}
                 onChange={(e) => updateCustomer("name", e.target.value)}
               />
-
               <input
                 placeholder="Telefone / WhatsApp"
                 value={customer.phone}
                 onChange={(e) => updateCustomer("phone", e.target.value)}
               />
-
               <input
                 placeholder="E-mail (opcional)"
                 value={customer.email}
                 onChange={(e) => updateCustomer("email", e.target.value)}
               />
-
               <div className="cep-row">
                 <input
                   placeholder="Digite o CEP"
@@ -920,18 +917,15 @@ Observações gerais: ${generalNotes || "Nenhuma"}`;
                   {cepLoading ? "Buscando..." : "Buscar CEP"}
                 </button>
               </div>
-
               {cepError && <p className="cep-error">{cepError}</p>}
               {addressPreview && (
                 <p className="address-preview">{addressPreview}</p>
               )}
-
               <input
                 placeholder="Rua / Logradouro"
                 value={customer.address}
                 onChange={(e) => updateCustomer("address", e.target.value)}
               />
-
               <div className="double-grid">
                 <input
                   placeholder="Número"
@@ -944,7 +938,6 @@ Observações gerais: ${generalNotes || "Nenhuma"}`;
                   onChange={(e) => updateCustomer("complement", e.target.value)}
                 />
               </div>
-
               <select
                 value={customer.payment}
                 onChange={(e) => updateCustomer("payment", e.target.value)}
@@ -954,11 +947,16 @@ Observações gerais: ${generalNotes || "Nenhuma"}`;
                 <option value="Crédito">Crédito</option>
                 <option value="Dinheiro">Dinheiro</option>
               </select>
+              ,
+              {customer.payment === "Pix" && (
+                <p className="payment-info">
+                  Chave Pix será enviada após a confirmação do pedido.
+                </p>
+              )}
               {(customer.payment === "Débito" ||
                 customer.payment === "Crédito") && (
                 <p className="payment-info">Levar maquininha na entrega.</p>
               )}
-
               {customer.payment === "Dinheiro" && (
                 <input
                   placeholder="Troco para quanto?"
@@ -966,13 +964,11 @@ Observações gerais: ${generalNotes || "Nenhuma"}`;
                   onChange={(e) => setGeneralNotes(e.target.value)}
                 />
               )}
-
               <textarea
                 placeholder="Observações gerais do pedido"
                 value={generalNotes}
                 onChange={(e) => setGeneralNotes(e.target.value)}
               />
-
               <label className="checkbox-row">
                 <input
                   type="checkbox"
