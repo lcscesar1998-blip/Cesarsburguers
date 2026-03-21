@@ -1199,8 +1199,11 @@ button {
 
 @media (max-width: 520px) {
   .topbar {
-    gap: 14px;
-    justify-content: flex-start;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.6);
   }
 
   .section-header h2 {
@@ -1232,4 +1235,31 @@ button {
   .cart-controls {
     justify-content: flex-end;
   }
+}
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.6);
+}
+.hero-logo {
+  width: 120px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .hero-logo {
+    width: 90px;
+  }
+}
+.app::before {
+  content: "";
+  position: relative;
+  inset: 0;
+  background: url("/logo.png") center no-repeat;
+  background-size: 400px;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 0;
 }

@@ -12,6 +12,7 @@ type ExtraOption = {
 type MenuItem = {
   id: string;
   name: string;
+  image?: string;
   category: Category;
   description: string;
   price: number;
@@ -87,6 +88,7 @@ const menuItems: MenuItem[] = [
   {
     id: "smash-classico",
     name: "Smash Clássico",
+    image: "/images/smash.png",
     category: "burgers",
     description: "Pão brioche, smash burger, queijo, picles e molho da casa.",
     price: 22.9,
@@ -108,6 +110,7 @@ const menuItems: MenuItem[] = [
   {
     id: "cesars-burguer",
     name: "César's Burguer",
+    image: "/images/cesar.png",
     category: "burgers",
     description: "Hambúrguer especial, queijo, alface, tomate e molho da casa.",
     price: 27.9,
@@ -130,6 +133,7 @@ const menuItems: MenuItem[] = [
   {
     id: "burguer-premium",
     name: "Burguer Premium",
+    image: "/images/premium.png",
     category: "burgers",
     description: "Hambúrguer artesanal, cheddar, bacon crocante e cebola roxa.",
     price: 29.9,
@@ -152,6 +156,7 @@ const menuItems: MenuItem[] = [
   {
     id: "burguer-duplo",
     name: "Burguer Duplo",
+    image: "/images/duplo.png",
     category: "burgers",
     description: "Dois hambúrgueres, queijo, bacon e molho especial.",
     price: 34.9,
@@ -674,6 +679,7 @@ Observações gerais: ${generalNotes || "Nenhuma"}`;
       </nav>
 
       <header className="hero" id="inicio">
+        <img src="/logo.png" className="hero-logo" alt="logo" />
         <div className="hero-overlay"></div>
         <div className="hero-smoke"></div>
         <div className="hero-smoke hero-smoke-2"></div>
@@ -697,8 +703,7 @@ Observações gerais: ${generalNotes || "Nenhuma"}`;
           </p>
 
           <p className="hero-small">
-            Site profissional, pedido rápido, cadastro do cliente e entrega por
-            CEP em poucos cliques.
+            FOME DE LEÃO, TE PREPARAMOS PARA A ARENA.
           </p>
 
           <div className="hero-cta-group">
@@ -715,11 +720,7 @@ Observações gerais: ${generalNotes || "Nenhuma"}`;
       <section className="promotions-section" id="promocoes">
         <div className="section-header">
           <span className="section-kicker">Promoções da casa</span>
-          <h2>Combos criados para vender mais e impressionar</h2>
-          <p>
-            Promoções prontas para impulsionar ticket médio e facilitar a
-            decisão do cliente.
-          </p>
+          <h2>Combos de vencedores para vencedores</h2>
         </div>
 
         <div className="promo-grid">
@@ -776,11 +777,14 @@ Observações gerais: ${generalNotes || "Nenhuma"}`;
                 <span className="card-badge">
                   {item.badge || getCategoryIcon(item.category)}
                 </span>
-                <div className={`card-visual ${item.category}`}>
-                  {getCategoryIcon(item.category)}
-                </div>
+                {item.image ? (
+                  <img src={item.image} alt={item.name} className="card-img" />
+                ) : (
+                  <div className={`card-visual ${item.category}`}>
+                    {getCategoryIcon(item.category)}
+                  </div>
+                )}
               </div>
-
               <div className="card-body">
                 <h3>{item.name}</h3>
                 <p>{item.description}</p>
