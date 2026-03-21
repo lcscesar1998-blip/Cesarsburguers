@@ -56,12 +56,13 @@ type CustomerProfile = {
   saveProfile: boolean;
 };
 
-const STORAGE_KEY = "cesars-burguer-profile-v2";
+const STORAGE_KEY = "cesars-burguer-profile-v3";
 
 const menuItems: MenuItem[] = [
   {
     id: "promo-gladiador",
     name: "Combo Gladiador",
+    image: "/images/combo-gladiador.png",
     category: "promos",
     description: "1 César's Burguer + Batata Normal + Refrigerante 350 ml.",
     price: 39.9,
@@ -70,6 +71,7 @@ const menuItems: MenuItem[] = [
   {
     id: "promo-dupla",
     name: "Promo Dupla de Arena",
+    image: "/images/combo-dupla-arena.png",
     category: "promos",
     description:
       "2 Smash Clássico + 1 Batata Rústica + 2 Refrigerantes 350 ml.",
@@ -79,6 +81,7 @@ const menuItems: MenuItem[] = [
   {
     id: "promo-imperador",
     name: "Combo Imperador",
+    image: "/images/combo-imperador.png",
     category: "promos",
     description: "1 Burguer Premium + Anéis de Cebola + Refrigerante 600 ml.",
     price: 49.9,
@@ -170,15 +173,17 @@ const menuItems: MenuItem[] = [
       "Molho especial",
     ],
     extraOptions: [
-      { id: "extra-cheddar-d", label: "Cheddar extra", price: 4.5 },
-      { id: "extra-cebola-d", label: "Cebola caramelizada", price: 4.0 },
-      { id: "extra-ovo-d", label: "Ovo", price: 3.5 },
+      { id: "extra-queijo", label: "Queijo extra", price: 4.5 },
+      { id: "extra-bacon", label: "Bacon", price: 5.5 },
+      { id: "extra-alface", label: "Alface", price: 2 },
+      { id: "extra-tomate", label: "Tomate", price: 2 },
     ],
   },
 
   {
     id: "batata-normal",
     name: "Batata Normal",
+    image: "/images/batata.png",
     category: "sides",
     description: "Porção de batata crocante tradicional.",
     price: 14.9,
@@ -187,6 +192,7 @@ const menuItems: MenuItem[] = [
   {
     id: "batata-normal-cheddar",
     name: "Batata Normal com Cheddar",
+    image: "/images/batata-cheddar-bacon.png",
     category: "sides",
     description: "Batata tradicional com cheddar cremoso.",
     price: 18.9,
@@ -195,6 +201,7 @@ const menuItems: MenuItem[] = [
   {
     id: "batata-rustica",
     name: "Batata Rústica",
+    image: "/images/batata-rustica.png",
     category: "sides",
     description: "Porção de batata rústica temperada.",
     price: 17.9,
@@ -203,6 +210,7 @@ const menuItems: MenuItem[] = [
   {
     id: "batata-rustica-cheddar",
     name: "Batata Rústica com Cheddar",
+    image: "/images/batata-rustica-cheddar-bacon.png",
     category: "sides",
     description: "Batata rústica com cheddar cremoso.",
     price: 21.9,
@@ -211,6 +219,7 @@ const menuItems: MenuItem[] = [
   {
     id: "aneis-cebola",
     name: "Anéis de Cebola",
+    image: "/images/aneis-cebola.png",
     category: "sides",
     description: "Porção de onion rings crocantes.",
     price: 19.9,
@@ -220,6 +229,7 @@ const menuItems: MenuItem[] = [
   {
     id: "coca-350",
     name: "Coca-Cola 350 ml",
+    image: "/images/coca.png",
     category: "drinks350",
     description: "Lata gelada 350 ml.",
     price: 6.5,
@@ -227,6 +237,7 @@ const menuItems: MenuItem[] = [
   {
     id: "guarana-350",
     name: "Guaraná 350 ml",
+    image: "/images/guarana.png",
     category: "drinks350",
     description: "Lata gelada 350 ml.",
     price: 6.5,
@@ -234,6 +245,7 @@ const menuItems: MenuItem[] = [
   {
     id: "fanta-350",
     name: "Fanta 350 ml",
+    image: "/images/fanta.png",
     category: "drinks350",
     description: "Lata gelada 350 ml.",
     price: 6.5,
@@ -242,6 +254,7 @@ const menuItems: MenuItem[] = [
   {
     id: "coca-600",
     name: "Coca-Cola 600 ml",
+    image: "/images/coca.png",
     category: "drinks600",
     description: "Garrafa gelada 600 ml.",
     price: 9.9,
@@ -249,6 +262,7 @@ const menuItems: MenuItem[] = [
   {
     id: "guarana-600",
     name: "Guaraná 600 ml",
+    image: "/images/guarana.png",
     category: "drinks600",
     description: "Garrafa gelada 600 ml.",
     price: 9.9,
@@ -256,6 +270,7 @@ const menuItems: MenuItem[] = [
   {
     id: "fanta-600",
     name: "Fanta 600 ml",
+    image: "/images/fanta.png",
     category: "drinks600",
     description: "Garrafa gelada 600 ml.",
     price: 9.9,
@@ -679,7 +694,6 @@ Observações gerais: ${generalNotes || "Nenhuma"}`;
       </nav>
 
       <header className="hero" id="inicio">
-        <img src="/logo.png" className="hero-logo" alt="logo" />
         <div className="hero-overlay"></div>
         <div className="hero-smoke"></div>
         <div className="hero-smoke hero-smoke-2"></div>
@@ -688,8 +702,11 @@ Observações gerais: ${generalNotes || "Nenhuma"}`;
         <div className="hero-mark" aria-label="Marca Cesar's Burguer">
           <div className="hero-mark-ring"></div>
           <div className="hero-mark-center">
-            <span className="hero-mark-small">Gladiator Burger</span>
-            <span className="hero-mark-main">CB</span>
+            <img
+              src="/logo.png"
+              className="hero-logo-center"
+              alt="Logo Cesar's Burguer"
+            />
           </div>
         </div>
 
@@ -728,6 +745,9 @@ Observações gerais: ${generalNotes || "Nenhuma"}`;
             .filter((item) => item.category === "promos")
             .map((item) => (
               <article className="promo-card" key={item.id}>
+                {item.image && (
+                  <img src={item.image} alt={item.name} className="promo-img" />
+                )}
                 <span className="promo-tag">{item.badge || "Promo"}</span>
                 <h3>{item.name}</h3>
                 <p>{item.description}</p>
@@ -750,11 +770,7 @@ Observações gerais: ${generalNotes || "Nenhuma"}`;
       <section className="menu-section" id="cardapio">
         <div className="section-header">
           <span className="section-kicker">Cardápio completo</span>
-          <h2>Monte o pedido do jeito certo</h2>
-          <p>
-            Lanches, acompanhamentos, bebidas e promoções em um cardápio limpo,
-            rápido e profissional.
-          </p>
+          <h2>Equipe seu o pedido do seu jeito </h2>
         </div>
 
         <div className="category-tabs">
@@ -933,11 +949,23 @@ Observações gerais: ${generalNotes || "Nenhuma"}`;
                 value={customer.payment}
                 onChange={(e) => updateCustomer("payment", e.target.value)}
               >
-                <option>Pix</option>
-                <option>Dinheiro</option>
-                <option>Cartão na entrega</option>
-                <option>Cartão online</option>
+                <option value="Pix">Pix</option>
+                <option value="Débito">Débito</option>
+                <option value="Crédito">Crédito</option>
+                <option value="Dinheiro">Dinheiro</option>
               </select>
+              {(customer.payment === "Débito" ||
+                customer.payment === "Crédito") && (
+                <p className="payment-info">Levar maquininha na entrega.</p>
+              )}
+
+              {customer.payment === "Dinheiro" && (
+                <input
+                  placeholder="Troco para quanto?"
+                  value={generalNotes}
+                  onChange={(e) => setGeneralNotes(e.target.value)}
+                />
+              )}
 
               <textarea
                 placeholder="Observações gerais do pedido"
