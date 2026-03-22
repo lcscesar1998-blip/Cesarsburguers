@@ -1281,8 +1281,8 @@ button {
   }
 }
 .hero-logo-center {
-  width: 130%;
-  height: 130%;
+  width: 140%;
+  height: 140%;
   object-fit: cover; /* 🔥 isso faz preencher tudo */
   border-radius: 50%;
 }
