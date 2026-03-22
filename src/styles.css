@@ -84,8 +84,9 @@ button {
   position: fixed;
   inset: 0;
   background: url("/public/logo.png") center no-repeat;
-  background-size: 400px;
-  opacity: 0.06;
+  background-size: 1100px;
+  opacity: 0.08;
+  filter: blur(1px);
   pointer-events: none;
   z-index: 0;
 }
@@ -1279,9 +1280,13 @@ button {
   }
 }
 .hero-logo-center {
-  width: 180%;
-  height: auto;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 🔥 isso faz preencher tudo */
+  border-radius: 50%;
+}
+.hero-mark-center {
+  overflow: hidden; /* corta certinho no círculo */
 }
 .payment-info {
   margin: -2px 0 0;
