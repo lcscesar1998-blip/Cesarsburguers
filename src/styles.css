@@ -857,6 +857,15 @@ button {
 
 .form select {
   appearance: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--gold-soft);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  font-weight: 700;
+}
+.form select option {
+  background: #06142f;
+  color: #f4d76b;
 }
 
 .form input::placeholder,
@@ -1290,4 +1299,8 @@ button {
   border-radius: 16px;
   margin-bottom: 12px;
   object-fit: cover;
+}
+.form select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.4);
 }
